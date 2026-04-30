@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       required: true,
       unique: true,
-      trim: true,
+      
     },
     phone: {
       type: String,
@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    active: {
+      type: Boolean,
+      default: true
+  },
   },
   {
     collection: "users",

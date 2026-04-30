@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
+import accountRoutes from "./routes/accountRoutes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
   res.json({ message: "API de loja de venda de carros funcionando" });
 });
 
+app.use("/account", accountRoutes)
 app.use("/users", userRoutes);
 
 app.use((error, req, res, next) => {

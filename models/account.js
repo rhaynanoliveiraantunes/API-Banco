@@ -7,16 +7,18 @@ const AccountSchema = new mongoose.Schema(
       required: true,
     },
     accountNumber: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Number,
       required: true,
       unique: true,
     },
     agency: {
-      type: Number,
+      type: String,
       required: true,
+      default: "0001",
     },
     type: {
       type: String,
+      enum: ["corrente", "poupanca"],
       required: true,
     },
     balance: {

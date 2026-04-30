@@ -19,18 +19,73 @@ const getAllUsers = async (req, res, next) => {
 };
 
 const getIdUsers = async (req, res, next) => {
-  try{
+  try {
     const user = await userService.getIdUsers(req.params.id);
     res.json(user)
-  }catch(error){
+  } catch (error) {
 
     next(error);
 
   }
 };
 
+const updateUser = async (req, res, next) => {
+  try {
+
+    const newUser = await userService.updateUser(req.params.id, req.body);
+
+    res.json(newUser);
+
+  } catch (error) {
+
+    next(error);
+
+  }
+}
+
+const deleteUser = async (req, res, next) => {
+  try {
+
+    const user = await userService.deleteUser(req.params.id);
+    res.json(user)
+
+  } catch (error) {
+
+    next(error);
+
+  }
+}
+
+const getcpfUsers = async (req, res, next) => {
+  try {
+    const user = await userService.getcpfUsers(req.params.cpf);
+    res.json(user)
+  } catch (error) {
+
+    next(error);
+
+  }
+};
+
+const getEmailUsers = async (req, res, next) => {
+  try {
+    const user = await userService.getEmailUsers(req.params.email);
+    res.json(user)
+  } catch (error) {
+
+    next(error);
+
+  }
+};
+
+
+
 export default {
-    createUser,
-    getAllUsers,
-    getIdUsers,
+  createUser,
+  getAllUsers,
+  getIdUsers,
+  updateUser,
+  deleteUser,
+  getcpfUsers,
+  getEmailUsers,
 }
