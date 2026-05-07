@@ -9,6 +9,9 @@ router.post("/", accontsController.createAccount);
 router.get("/", accontsController.getAllAccounts);
 router.get("/:id", accountController.getIdAccount);
 router.get("/number/:accountNumber", accontsController.getAccountNumber);
+router.get("/:id/balance", accountController.getBalanceAccount);
+router.post("/:id/deposit", accountController.DepositAccout);
+router.post("/:id/withdraw", accountController.withdraw);
 
 
 export default router; 

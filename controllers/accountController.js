@@ -37,11 +37,49 @@ const getAccountNumber = async (req, res, next) => {
     }
 }
 
+const getBalanceAccount = async (req, res, next) => {
+    try {
+        const balance = await accountService.getBalanceAccount(req.params.id)
+        res.json(balance);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+const DepositAccout = async (req, res, next) => {
+    try {
+        const { account, previousBalance, valor } = await accountService.getDepositAccout(req.params.id, req.body);
+
+        res.json({
+            message: "Depósito realizado com sucesso",
+            saldoAnterior: previousBalance,
+            valorDepositado: valor,
+            saldoAtual: account.balance
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+const withdraw = async (req, res, next) => {
+    try {
+        const balance = await accountService.withdraw(req.params.id)
+        res.json(balance);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 export default {
 
-      createAccount,
-     getAllAccounts,
-     getIdAccount,
-     getAccountNumber,
-    
+    createAccount,
+    getAllAccounts,
+    getIdAccount,
+    getAccountNumber,
+    getBalanceAccount,
+    DepositAccout,
+    withdraw,
+
 }
