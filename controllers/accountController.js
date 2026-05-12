@@ -64,7 +64,16 @@ const DepositAccout = async (req, res, next) => {
 
 const withdraw = async (req, res, next) => {
     try {
-        const balance = await accountService.withdraw(req.params.id)
+        const balance = await accountService.withdraw(req.params.id, req.body)
+        res.json(balance);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const withdraw = async (req, res, next) => {
+    try {
+        const balance = await accountService.withdraw(req.body)
         res.json(balance);
     } catch (error) {
         next(error);
@@ -81,5 +90,5 @@ export default {
     getBalanceAccount,
     DepositAccout,
     withdraw,
-
+    tranfer,
 }

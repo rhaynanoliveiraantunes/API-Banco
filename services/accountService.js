@@ -1,6 +1,7 @@
 import Account from "../models/account.js";
 import User from "../models/user.js";
 import Transaction from "../models/transaction.js"
+import account from "../models/account.js";
 
 const createAccount = async (data) => {
 
@@ -113,6 +114,191 @@ const DepositAccout = async (id, data) => {
   return { account, previousBalance, valor };
 }
 
+const withdraw = async (id, data) => {
+
+ const { value, description} = data;
+
+ const account = await Account.findById(id)
+
+ 
+  if (!account) {
+    const error = new Error("Não existe um usuario com esse id");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (!account.active) {
+
+    const error = new Error("A conta esta inativa");
+    error.statusCode = 400;
+    throw error;
+
+  }
+
+  if (account.blocked) {
+      const error = new Error("A conta esta bloqueada");
+      error.statusCode = 400;
+      throw error;
+  }
+
+
+
+  if ( value <= 0){
+
+   const error = new Error("O valor de saque precisa ser maior que 0")
+   error.statusCode = 400;
+   throw error;
+
+  }
+
+   if( account.type === "poupanca"){
+
+
+   
+
+    if (account.balance < value) { 
+    const error = new Error("Saldo insuficiente");
+    error.statusCode = 400;
+    throw error;
+  }
+
+     const beforeBalance = account.balance;
+
+   
+  const updatedAccount = await Account.findByIdAndUpdate( 
+    id,
+    { $inc: { balance: -value } }, 
+    { new: true, runValidators: true }
+  );
+
+    return {
+    
+    saldo: beforeBalance,
+    saque: value,
+    novo_Saldo: updatedAccount.balance
+
+
+  };
+
+}else {
+
+
+    if (account.balance + account.limit < value) { 
+    const error = new Error("Saldo insuficiente");
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const beforeBalance = account.balance;
+   
+  const updatedAccount = await Account.findByIdAndUpdate( 
+    id,
+    { $inc: { balance: -value } }, 
+    { new: true, runValidators: true }
+  );
+
+  return {
+    
+    saldo: beforeBalance,
+    limite: account.limit,
+    disponivel: account.limit + beforeBalance,
+    saque: value,
+    novo_Saldo: updatedAccount.balance
+
+
+  };
+
+}
+
+
+
+}
+
+const transfer = async (data) => {
+
+   const {fromAccountId, toAccountId, value, description} = data;
+
+   const fromAccount = await Account.findById(fromAccountId);
+   const toAccount = await Account.findById(toAccountId);
+
+    if (!fromAccount) {
+      const error = new Error("Conta origem não encontrada");
+      error.statusCode = 400;
+      throw error;
+  }
+
+   if (!toAccount) {
+      const error = new Error("Conta destino não encontrada");
+      error.statusCode = 400;
+      throw error;
+  }
+
+    if (!fromAccount.active) {
+      const error = new Error("A conta origem esta inativa");
+      error.statusCode = 400;
+      throw error;
+  }
+
+      if (fromAccount.blocked) {
+      const error = new Error("A conta origem esta bloqueada");
+      error.statusCode = 400;
+      throw error;
+  }
+
+  if (toAccount.blocked) {
+      const error = new Error("A conta destino esta bloqueada");
+      error.statusCode = 400;
+      throw error;
+  }
+
+  if ( value <= 0){
+
+   const error = new Error("O valor da transferencia precisa ser maior que 0")
+   error.statusCode = 400;
+   throw error;
+
+  }
+
+  if ( fromAccountId === toAccountId){
+
+   const error = new Error("Não e possivel fazer transferencia para a mesma conta")
+   error.statusCode = 400;
+   throw error;
+
+  }
+
+  if ( fromAccount.balance < value){
+
+   const error = new Error("A conta origem nao tem saldo suficiente")
+   error.statusCode = 400;
+   throw error;
+
+  }
+
+  const newFromAccount = await account.findByIdAndUpdate(
+
+    fromAccountId,
+    { $inc: {balance: -value}},
+    { new: true, runValidators: true }
+  )
+
+   const newFromAccount = await account.findByIdAndUpdate(
+
+    fromAccountId,
+    { $inc: {balance: -value}},
+    { new: true, runValidators: true }
+  )
+
+    const newtoAccount = await account.findByIdAndUpdate(
+
+    toAccountId,
+    { $inc: {balance: +value}},
+    { new: true, runValidators: true }
+  )
+
+ 
+
+}
 
 export default {
 
@@ -122,5 +308,6 @@ export default {
   getAccountNumber,
   getBalanceAccount,
   DepositAccout,
+  withdraw,
 
 }

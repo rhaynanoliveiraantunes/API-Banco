@@ -10,6 +10,8 @@
 // nao começado, sei fazer
 //
 
+// criar transaçoes do midware e do transfer
+
 // Conta regras
 //
 //
