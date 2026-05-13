@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
+import transaction from "./models/transaction.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 
 dotenv.config();
 
@@ -15,8 +17,10 @@ app.get("/", (req, res) => {
   res.json({ message: "API de loja de venda de carros funcionando" });
 });
 
-app.use("/account", accountRoutes)
+app.use("/account", accountRoutes);
 app.use("/users", userRoutes);
+app.use("/transaction",transactionRoutes);
+
 
 app.use((error, req, res, next) => {
   res.status(error.statusCode || 500).json({
