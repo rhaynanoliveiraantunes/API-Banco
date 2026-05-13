@@ -64,21 +64,50 @@ const DepositAccout = async (req, res, next) => {
 
 const withdraw = async (req, res, next) => {
     try {
-        const balance = await accountService.withdraw(req.params.id, req.body)
-        res.json(balance);
+        const whitchdrawr = await accountService.withdraw(req.params.id, req.body)
+        res.json(whitchdrawr);
     } catch (error) {
         next(error);
     }
 }
 
-const withdraw = async (req, res, next) => {
+const transfer = async (req, res, next) => {
     try {
-        const balance = await accountService.withdraw(req.body)
-        res.json(balance);
+        const transfe = await accountService.transfer(req.body)
+        res.json(transfe);
     } catch (error) {
         next(error);
     }
 }
+
+const getStatement = async (req, res, next) => {
+    try {
+        const statement = await accountService.getStatement(req.params.id)
+        res.json(statement);
+    } catch (error) {
+        next(error);
+    }
+}
+
+ const withdrawSimulate = async (req, res, next) => {
+    try {
+        const whitdraw = await accountService.mithdrawSimulate(req.params.id, req.body)
+        res.json(whitdraw);
+    } catch (error) {
+        next(error);
+    }
+}
+
+ const transferSimulate = async (req, res, next) => {
+    try {
+        const transfe = await accountService.transferSimulate( req.body)
+        res.json(transfe);
+    } catch (error) {
+        next(error);
+    }
+}
+
+
 
 
 export default {
@@ -90,5 +119,8 @@ export default {
     getBalanceAccount,
     DepositAccout,
     withdraw,
-    tranfer,
+    transfer,
+    getStatement,
+    withdrawSimulate,
+    transferSimulate,
 }

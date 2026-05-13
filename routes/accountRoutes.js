@@ -12,7 +12,13 @@ router.get("/number/:accountNumber", accontsController.getAccountNumber);
 router.get("/:id/balance", accountController.getBalanceAccount);
 router.post("/:id/deposit", accountController.DepositAccout);
 router.post("/:id/withdraw", accountController.withdraw);
-router.post("/transfer", accountController.tranfer)
+router.post("/transfer", accountController.transfer);
+router.get("/:id/statement", accountController.getStatement);
+router.post("/:id/whitdraw/simulate", accountController.withdrawSimulate);
+router.post("/transfer/simulate", accountController.transferSimulate);
+
+
+
 
 
 export default router; 
