@@ -5,6 +5,7 @@ import userRoutes from "./routes/userRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import transaction from "./models/transaction.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 app.use("/account", accountRoutes);
 app.use("/users", userRoutes);
 app.use("/transaction",transactionRoutes);
+app.use("/admin",adminRoutes);
 
 
 app.use((error, req, res, next) => {
