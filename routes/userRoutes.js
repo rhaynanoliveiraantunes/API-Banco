@@ -1,16 +1,17 @@
 import express from "express";
 import userController from "../controllers/userController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", userController.createUser);
-router.get("/", userController.getAllUsers);
+router.get("/me", authMiddleware, userController.getMe);
+router.put("/me", authMiddleware, userController.updateMe);
 
-router.get("/:id", userController.getIdUsers);
-router.put("/:id", userController.updateUser); 
-router.delete("/:id", userController.deleteUser);
-router.get("/cpf/:cpf", userController.getcpfUsers);
-router.get("/email/:email", userController.getEmailUsers);
+router.get("/", authMiddleware, userController.getAllUsers);
+router.get("/:id", authMiddleware, userController.getIdUsers);
+router.put("/:id", authMiddleware, userController.updateUser);
+router.delete("/:id", authMiddleware, userController.deleteUser);
+router.get("/cpf/:cpf", authMiddleware, userController.getcpfUsers);
+router.get("/email/:email", authMiddleware, userController.getEmailUsers);
 
-
-export default router; 
+export default router;

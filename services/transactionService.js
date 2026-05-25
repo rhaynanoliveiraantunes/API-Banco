@@ -1,7 +1,7 @@
 import Transaction from "../models/transaction.js";
  
 const getTransaction = async () => {
-    return (await Transaction.find()).sort({ createdAt: -1 });
+    return await Transaction.find().sort({ createdAt: -1 });
 };
  
 const getIdTransaction = async (id) => {

@@ -62,7 +62,7 @@ const getActiveAccounts = async (req, res, next) => {
 const getInactiveAccounts = async (req, res, next) => {
     try {
         const InactiveAccounts = await adminService.getInactiveAccounts();
-        res.json(activeAccounts);
+        res.json(InactiveAccounts);
     } catch (error) {
         next(error);
     }
@@ -70,7 +70,7 @@ const getInactiveAccounts = async (req, res, next) => {
 
 const blockAccount = async (req, res, next) => {
     try {
-        const blockedAccount = await adminService.blockAccount(req.params.id);
+        const blockedAccount = await adminService.blockeAccount(req.params.id);
         res.json(blockedAccount);
     } catch (error) {
         next(error);
@@ -89,7 +89,7 @@ const unblockAccount = async (req, res, next) => {
 const closeAccount = async (req, res, next) => {
     try {
         const closeAccount = await adminService.closeAccount(req.params.id);
-        res.json(unblockedAccount);
+        res.json(closeAccount);
     } catch (error) {
         next(error);
     }

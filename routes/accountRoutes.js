@@ -1,24 +1,19 @@
 import express from "express";
-import accontsController from "../controllers/accountController.js";
-import account from "../models/account.js";
 import accountController from "../controllers/accountController.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", accontsController.createAccount);
-router.get("/", accontsController.getAllAccounts);
-router.get("/:id", accountController.getIdAccount);
-router.get("/number/:accountNumber", accontsController.getAccountNumber);
-router.get("/:id/balance", accountController.getBalanceAccount);
-router.post("/:id/deposit", accountController.DepositAccout);
-router.post("/:id/withdraw", accountController.withdraw);
-router.post("/transfer", accountController.transfer);
-router.get("/:id/statement", accountController.getStatement);
-router.post("/:id/whitdraw/simulate", accountController.withdrawSimulate);
-router.post("/transfer/simulate", accountController.transferSimulate);
+router.post("/", authMiddleware, accountController.createAccount);
+router.get("/", authMiddleware, accountController.getAllAccounts);
+router.get("/:id", authMiddleware, accountController.getIdAccount);
+router.get("/number/:accountNumber", authMiddleware, accountController.getAccountNumber);
+router.get("/:id/balance", authMiddleware, accountController.getBalanceAccount);
+router.post("/:id/deposit", authMiddleware, accountController.DepositAccout);
+router.post("/:id/withdraw", authMiddleware, accountController.withdraw);
+router.post("/transfer", authMiddleware, accountController.transfer);
+router.get("/:id/statement", authMiddleware, accountController.getStatement);
+router.post("/:id/whitdraw/simulate", authMiddleware, accountController.withdrawSimulate);
+router.post("/transfer/simulate", authMiddleware, accountController.transferSimulate);
 
-
-
-
-
-export default router; 
+export default router;

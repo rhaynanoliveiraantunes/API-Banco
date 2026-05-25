@@ -30,7 +30,7 @@ import transaction from "../models/transaction.js";
      const activateUser = await User.findByIdAndUpdate(
         userId,
         {
-            activated: true,
+            active: true,
         }
      )
 
@@ -73,7 +73,7 @@ import transaction from "../models/transaction.js";
 
   const getInactiveAccounts = async () => {
 
-    return await Account.find({ active: true})
+    return await Account.find({ active: false})
   }
 
   const blockeAccount = async (accountId) => {
@@ -301,7 +301,7 @@ const chargeMonthly = async (accountId, data) => {
 const  getNegativeBalanceAccounts = async () => {
  
     
-    return await Account.find({ balance: { $lte: 0}})
+    return await Account.find({ balance: { $lt: 0}})
 
 }
 
@@ -329,4 +329,3 @@ export default {
     getTopBalances,
 
 };
- 

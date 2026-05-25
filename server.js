@@ -6,6 +6,9 @@ import accountRoutes from "./routes/accountRoutes.js";
 import transaction from "./models/transaction.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import notFound from "./middlewares/notFound.js";
 
 dotenv.config();
 
@@ -22,13 +25,9 @@ app.use("/account", accountRoutes);
 app.use("/users", userRoutes);
 app.use("/transaction",transactionRoutes);
 app.use("/admin",adminRoutes);
-
-
-app.use((error, req, res, next) => {
-  res.status(error.statusCode || 500).json({
-    message: error.message
-  });
-});
+app.use("/auth", authRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 
 const startServer = async () => {
